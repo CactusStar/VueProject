@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Shopping Cart Example</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <div id="app" v-cloak>
+            <template v-if="List.length">
+                <input type="text" v-model.number="message">
+                <p>{{ typeof message }}</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                <input type="checkbox" :checked="total" @click="checkAll()">
+                            </th>
+                            <th>Name</th>
+                            <th>price</th>
+                            <th>count</th>
+                            <th>action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, index) in List">
+                            <td>
+                                <input type="checkbox" :checked="item.selected" @click="check(index)">
+                            </td>
+                            <td>{{ index + 1 }}</td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.price }}</td>
+                            <td>
+                                <button @click="handleReduce(index)" :disabled="item.count === 0">-</button>
+                                {{ item.count }}
+                                <button @click="handleAdd(index)">+</button>
+                            </td>
+                            <td>
+                                <button @click="handleRemove(index)">Remove</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>total price: $ {{ totalPrice }}</div>
+            </template>
+            <div v-else>Shopping Cart is Empty</div>
+
+        </div>
+    </body>
+
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <script src="index.js"></script>
+</html>

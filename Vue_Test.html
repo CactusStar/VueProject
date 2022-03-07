@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Vue Example</title> 
+    </head>
+    <body>
+        <div id="app">
+            <a href="http://wwww.apple.com" @click="handleClick('preventOpen', $event)">open the url</a>
+            <a href="http://wwww.baidu.com" @click.stop="handle">baidu</a>
+            Click count: {{counter}}
+            <button @click="handleAdd()">+1</button>
+            <button @click="handleAdd(10)">+10</button>
+            <input type="text" v-model="name" placeholder="Your name">
+            <h1>Hello, {{name}}</h1>
+            <span v-html="link"></span>
+            <a v-bind:href="url">Link</a>
+            <p v-if="show">This is text</p>
+            <button v-on:click="handleClose">ClickToHide</button>
+            <p>Amount: {{prices}}</p>
+            <p v-if="status === 1">when status equal to 1 display this line</p>
+            <p v-else-if="status === 2">when status equal to 2 display this line</p>
+            <p v-else>or will display this line</p>
+            <template v-if="type === 'name'">
+                <label>User Name: </label>
+                <input placeholder="enter the user name">
+            </template>
+            <template v-else>
+                <label>e-mail: </label>
+                <input placeholder="enter the e-mail">
+            </template>
+            <button @click="handleToggleClick">Switch the input type</button>
+            <ul>
+                <li v-for="book in books">{{book.name}}</li>
+            </ul>
+
+            <ul>
+                <li v-for="(book, index) in books">{{index}} - {{book.name}}</li>
+            </ul>
+            <ul>
+                <template v-for="book in filterBooks">
+                    <li>name: {{book.name}}</li>
+                    <li>author: {{book.author}}</li>
+                </template>
+            </ul>
+            <ul>
+                <li v-for="(value, key, index) in user">{{index}} - {{key}} - {{value}}</li>
+            </ul>
+        </div>
+        <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+        <script>
+            var app = new Vue({
+                el: document.getElementById('app'),
+                data: {
+                    counter: 0,
+                    name: '',
+                    link: '<a href="#">This is a link</a>',
+                    url: 'https://www.github.com',
+                    show: true,
+                    status: 1,
+                    type: 'name',
+                    books: [
+                        {name: "book1"},
+                        {name: "book2"}
+                    ],
+                    books1: [
+                        {
+                            name: 'bookAAA',
+                            author: 'A'
+                        },
+                        {
+                            name: 'bookBBB',
+                            author: 'B'
+                        },
+                        {
+                            name: 'HowToWIn',
+                            author: 'C'
+                        }
+                    ],
+                    user: {
+                        name: 'Aren',
+                        gender: 'Man',
+                        age: '25'
+                    },
+                    package1: [
+                        {
+                            name: "iphone 7",
+                            price: 7199,
+                            count: 2
+                        },
+                        {
+                            name: "ipad",
+                            price: 2888,
+                            count: 1
+                        }
+                    ],
+                    package2: [
+                        {
+                            name: "apple",
+                            price: 3,
+                            count: 5
+                        },
+                        {
+                            name: "banana",
+                            price: 2,
+                            count: 10
+                        }
+                    ]
+                },
+                methods: {
+                    handleClose: function(){
+                        if (this.show == true){
+                            this.show = false;
+                        }
+                            
+                        else{
+                            this.show = true;
+                        }       
+                    },
+                    handleToggleClick: function(){
+                        this.type = this.type === 'name' ? 'mail' : 'name'
+                    },
+                    handleAdd: function(count){
+                        count = count || 1;
+                        this.counter += count;
+                    },
+                    handleClick: function(message, event){
+                        event.preventDefault();
+                        window.alert(message);
+                    },
+                    handle: function(){
+                        
+                    }
+                },
+                computed: {
+                    prices: function(){
+                        var prices = 0;
+                        for (var i = 0; i < this.package1.length; i++){
+                            prices += this.package1[i].price*this.package1[i].count;
+                        }
+                        for (var i = 0; i < this.package2.length; i++){
+                            prices += this.package2[i].price*this.package2[i].count;
+                        }
+                        return prices;
+                    },
+
+                    filterBooks: function(){
+                        return this.books1.filter(function(book){
+                            return book.name.match(/book/)
+                        })
+                    }
+                }
+            });  
+
+            // Vue.set(app.books1, 3, {
+            //     name: 'book3',
+            //     author: 'D'
+            // });
+
+            // app.books1 = app.books1.filter(function (item){
+            //     return item.name.match(/book/);
+            // });
+        </script>
+    </body>
+</html>

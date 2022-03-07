@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Vue Test</title>
+    </head>
+    <div id="app">
+        <my-component warning-text="reminder text"></my-component>
+    </div>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <script>
+        Vue.component('my-component', {
+            props: ['warningText'],
+            template: '<div>{{ warningText }}</div>'
+        })
+
+        var app = new Vue({
+            el: '#app'
+        })
+    </script>
+    
+</html>
